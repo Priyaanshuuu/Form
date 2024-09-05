@@ -32,6 +32,7 @@ const InspectionReportForm = () => {
     const [errors, setErrors] = useState({});
     const [signaturePreview, setSignaturePreview] = useState(null);
     const [isChecklistVisible, setIsChecklistVisible] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog box
     const canvasRef = useRef(null);
     const isDrawing = useRef(false);
 
@@ -146,6 +147,14 @@ const InspectionReportForm = () => {
         setIsChecklistVisible(!isChecklistVisible);
     };
 
+    const openDialog = () => {
+        setIsDialogOpen(true); // Open dialog box
+    };
+
+    const closeDialog = () => {
+        setIsDialogOpen(false); // Close dialog box
+    };
+
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
@@ -258,14 +267,14 @@ const InspectionReportForm = () => {
                         onMouseMove={handleSignatureDraw}
                         className="signature-canvas"
                     ></canvas>
-                    <input
-                        type="file"
-                        id="signatureUpload"
-                        name="signatureUpload"
-                        accept="image/*"
-                        onChange={handleSignatureUpload}
+                    <button
+                        type="button"
+                        onClick={openDialog}
                         className="signature-upload"
-                    />
+                    >
+                        Upload Signature
+                    </button>
+
                     <div className="signature-buttons">
                         <button type="button" onClick={handleSignatureClear}>
                             Clear
@@ -278,11 +287,31 @@ const InspectionReportForm = () => {
                     )}
                 </div>
 
-                <button type="submit">Submit Report</button>
+                <button type="submit" className='approve'>Approve Report</button>
+                <button type="submit" className='reject'>Reject Report</button>
             </form>
+
+            {/* Modal for file upload */}
+            {isDialogOpen && (
+                <div className="dialog-backdrop">
+                    <div className="dialog">
+                        <h3>Upload Signature</h3>
+                        <input
+                            type="file"
+                            id="signatureUpload"
+                            name="signatureUpload"
+                            accept="image/*"
+                            onChange={(e) => {
+                                handleSignatureUpload(e);
+                                closeDialog(); // Close the dialog after file is uploaded
+                            }}
+                        />
+                        <button onClick={closeDialog}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default InspectionReportForm;
-

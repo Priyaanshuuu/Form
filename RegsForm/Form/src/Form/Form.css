@@ -209,3 +209,31 @@ button.toggle-button {
 button.toggle-button:hover {
     background-color: #1d1e3c;
 }
+.dialog-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+}
+
+.dialog button {
+    margin-top: 10px;
+    background-color: #bae8e8;
+    color: black;
+}
+.reject{
+    margin-top: 20px;
+}
